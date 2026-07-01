@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Alexandra 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,600;1,400&family=Montserrat:wght=300;400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --blanco-marfil: #fdfbf7;
+            --rosa-seda: #fae1dc;
+            --rosa-profundo: #d99b90;
+            --dorado-lujo: #dfba6b;
+            --texto-calido: #3d3028;
+            --fuente-elegante: 'Playfair Display', serif;
+            --fuente-limpia: 'Montserrat', sans-serif;
+            --fuente-carta: 'Pinyon Script', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--blanco-marfil);
+            color: var(--texto-calido);
+            font-family: var(--fuente-limpia);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .atmósfera {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(250, 225, 220, 0.6) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .brillo-flotante {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: lluviaSuave 7s infinite linear;
+        }
+
+        /* --- ACTO 0: EL SOBRE --- */
+        .pantalla-sobre {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--blanco-marfil);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .contenedor-sobre {
+            position: relative;
+            width: 280px; height: 200px;
+            background: #fff;
+            border: 1px solid var(--rosa-seda);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(61, 48, 40, 0.08);
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .sello-cera {
+            width: 60px; height: 60px;
+            background: var(--rosa-profundo);
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(217, 155, 144, 0.5), inset 0 0 10px rgba(0,0,0,0.1);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.8rem; color: #fff; z-index: 10;
+            animation: latidoSutil 2s infinite ease-in-out;
+        }
+
+        .texto-sobre-guia {
+            margin-top: 30px;
+            font-family: var(--fuente-elegante);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--rosa-profundo);
+            letter-spacing: 1px;
+        }
+
+        /* --- ESCENARIO PRINCIPAL --- */
+        .escenario-principal {
+            width: 100%; max-width: 380px; height: 90vh;
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            text-align: center; opacity: 0; transform: scale(0.95);
+            transition: all 1.5s ease; position: relative;
+        }
+        /* --- SECCIÓN 1: LA ROSA --- */
+        .seccion-rosa {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            transition: all 0.8s ease;
+        }
+
+        .encabezado p {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px;
+            color: var(--rosa-profundo); font-weight: 600; margin-bottom: 8px;
+        }
+
+        .encabezado h1 {
+            font-family: var(--fuente-elegante); font-size: 1.8rem; font-weight: 400;
+            font-style: italic; line-height: 1.3; padding: 0 10px;
+        }
+
+        .area-interactiva {
+            position: relative; width: 260px; height: 280px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
+        }
+
+        .cupula-cristal {
+            position: absolute; width: 160px; height: 240px;
+            border: 2px solid rgba(255, 255, 255, 0.9); background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            border-radius: 80px 80px 16px 16px;
+            box-shadow: 0 20px 40px rgba(61, 48, 40, 0.05), inset 0 10px 20px rgba(255,255,255,0.6);
+            z-index: 2; pointer-events: none; transition: all 0.9s ease;
+        }
+
+        .rosa-viva {
+            font-size: 5.8rem; z-index: 1; pointer-events: none;
+            filter: drop-shadow(0 15px 20px rgba(217, 155, 144, 0.4));
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: balanceo 4s infinite ease-in-out;
+        }
+
+        .instruccion-toque {
+            font-size: 0.8rem; color: var(--rosa-profundo); letter-spacing: 2px;
+            animation: pulso 2s infinite ease-in-out; margin-bottom: 20px; transition: all 0.5s ease;
+        }
+
+        /* --- CORTINA MÁGICA --- */
+        .cortina-magica {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--blanco-marfil); z-index: 50;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+        }
+        .cortina-magica.activa { opacity: 1; }
+        .destello-central { font-size: 3rem; animation: girarMagico 1.5s infinite linear; }
+
+        /* --- SECCIÓN 2: EL TOCADOR --- */
+        .seccion-tocador {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+            opacity: 0; pointer-events: none; transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .seccion-tocador.activa { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+        .tocador-estante { display: flex; justify-content: center; align-items: flex-end; gap: 25px; width: 100%; height: 140px; margin-top: 15px; }
+        .objeto-tocador { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+        .objeto-tocador:active { transform: scale(0.9); }
+        .icono-objeto { font-size: 3.2rem; filter: drop-shadow(0 8px 15px rgba(61, 48, 40, 0.1)); }
+
+        .objeto-tocador:nth-child(1) .icono-objeto { animation: flotarElegante 4s infinite ease-in-out; }
+        .objeto-tocador:nth-child(2) .icono-objeto { animation: flotarElegante 4s infinite ease-in-out 1s; }
+        .objeto-tocador:nth-child(3) .icono-objeto { animation: flotarElegante 4s infinite ease-in-out 2s; }
+        .etiqueta-objeto { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rosa-profundo); margin-top: 6px; font-weight: 600; }
+
+        .espejo-revelacion {
+            width: 90%; background: #ffffff; border: 1px solid var(--rosa-seda); border-radius: 24px;
+            padding: 25px 22px; box-shadow: 0 15px 40px rgba(61, 48, 40, 0.04);
+            opacity: 0; transform: translateY(15px); transition: all 0.6s ease; margin-bottom: 10px;
+        }
+        .espejo-revelacion.activo { opacity: 1; transform: translateY(0); }
+        .decoracion-espejo { font-size: 1.1rem; color: var(--dorado-lujo); margin-bottom: 8px; }
+        .texto-revelado { font-family: var(--fuente-elegante); font-size: 1rem; line-height: 1.6; font-style: italic; }
+
+        /* --- CARTA DE SEDA --- */
+        .carta-seda {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -45%) scale(0.9);
+            width: 92%; background: #ffffff; border-radius: 30px; padding: 40px 28px 35px 28px;
+            box-shadow: 0 30px 60px rgba(61, 48, 40, 0.12); border: 1px solid rgba(250, 225, 220, 0.7);
+            opacity: 0; pointer-events: none; z-index: 20; transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .carta-seda.abierta { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+        .btn-cerrar-carta { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .adorno-carta { font-size: 1.5rem; color: var(--dorado-lujo); margin-bottom: 10px; }
+        .titulo-carta { font-family: var(--fuente-elegante); font-size: 1.7rem; font-weight: 400; font-style: italic; margin-bottom: 5px; }
+        .subtitulo-carta { font-family: var(--fuente-elegante); font-size: 1.2rem; font-style: italic; color: var(--rosa-profundo); margin-bottom: 20px; }
+        .contenido-carta { font-size: 0.9rem; line-height: 1.8; color: #594a40; text-align: justify; margin-bottom: 25px; }
+        .contenido-carta strong { color: var(--rosa-profundo); font-weight: 600; }
+        .firma-carta { font-family: var(--fuente-carta); font-size: 2.5rem; color: var(--rosa-profundo); line-height: 1; }
+
+        .btn-ver-carta {
+            background: #ffffff; border: 1px solid var(--rosa-seda); padding: 10px 20px; border-radius: 30px;
+            font-family: var(--fuente-elegante); font-style: italic; font-size: 0.8rem; color: var(--rosa-profundo);
+            cursor: pointer; box-shadow: 0 5px 15px rgba(61, 48, 40, 0.03); transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
+        }
+
+        .petalo-caida { position: absolute; font-size: 1.5rem; pointer-events: none; z-index: 30; animation: dispersion 2s forwards ease-out; }
+
+        /* --- ANIMACIONES --- */
+        @keyframes latidoSutil { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes balanceo { 0%, 100% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(4deg) translateY(-6px); } }
+        @keyframes girarMagico { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.3); } 100% { transform: rotate(360deg) scale(1); } }
+        @keyframes pulso { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        @keyframes flotarElegante { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes lluviaSuave {
+            0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(105vh) translateX(40px) rotate(360deg); opacity: 0; }
+        }
+        @keyframes dispersion { 0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; } 100% { transform: translateY(200px) translateX(40px) scale(0.7); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="atmósfera" id="lluviaBrillos"></div>
+
+    <div class="cortina-magica" id="cortinaMagica">
+        <div class="destello-central">✨🌸✨</div>
+    </div>
+
+    <div class="pantalla-sobre" id="pantallaSobre">
+        <div class="contenedor-sobre" id="triggerSobre">
+            <div class="sello-cera">💌</div>
+        </div>
+        <p class="texto-sobre-guia">Para Alexandra...</p>
+    </div>
+
+    <main class="escenario-principal" id="escenario">
+        
+        <section class="seccion-rosa" id="seccionRosa">
+            <header class="encabezado">
+                <p>Un rincón para ti</p>
+                <h1>Hay bellezas que merecen ser cuidadas...</h1>
+            </header>
+
+            <div class="area-interactiva" id="triggerRosa">
+                <div class="cupula-cristal" id="cupula"></div>
+                <div class="rosa-viva" id="rosa">🌹</div>
+            </div>
+
+            <footer class="instruccion-toque" id="textoGuia">
+                Toca el cristal para liberarla...
+            </footer>
+        </section>
+
+        <section class="seccion-tocador" id="seccionTocador">
+            <header class="encabezado">
+                <p>El segundo secreto</p>
+                <h1>El Tocador de tus Detalles</h1>
+            </header>
+
+            <div class="tocador-estante" id="contenedorEstante">
+                <div class="objeto-tocador" data-tipo="esencia" data-emoji="✨" data-texto="Tus ojos tienen un brillo único y transmiten una paz tan bonita que, cada vez que los veo, el resto del mundo se apaga por completo. Es, sin duda, lo que más me gusta de ti.">
+                    <div class="icono-objeto">🧪</div>
+                    <div class="etiqueta-objeto">Esencia 01</div>
+                </div>
+
+                <div class="objeto-tocador" data-tipo="esencia" data-emoji="🌸" data-texto="Tu sonrisa tiene un efecto mágico: es súper sincera y capaz de desarmar cualquier mal día en un segundo. Verla me cambia el ánimo por completo.">
+                    <div class="icono-objeto">🏺</div>
+                    <div class="etiqueta-objeto">Esencia 02</div>
+                </div>
+
+                <div class="objeto-tocador" data-tipo="esencia" data-emoji="💝" data-texto="Tu voz es como oír esa canción hermosa que quieres escuchar en bucle todo el día. Tiene una calidez increíble y me encanta quedarme escuchándote.">
+                    <div class="icono-objeto">🔮</div>
+                    <div class="etiqueta-objeto">Esencia 03</div>
+                </div>
+            </div>
+
+            <div class="espejo-revelacion" id="espejo">
+                <div class="decoracion-espejo" id="iconoEspejo">✧ ✦ ✧</div>
+                <p class="texto-revelado" id="textoEspejo">Selecciona una esencia secreta para descubrir lo que provoca en mí...</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; width: 90%; margin-bottom: 15px;">
+                <button class="btn-ver-carta" id="btnSiguiente">Siguiente Secreto ✦</button>
+                <button class="btn-ver-carta" id="btnSalir" style="background: transparent; border-color: transparent; opacity: 0.6; font-size: 0.75rem; box-shadow: none;">Cerrar este espacio 🌸</button>
+            </div>
+        </section>
+
+        <section id="pantallaDespedida" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 1s ease; padding: 20px;">
+            <div style="font-size: 3.5rem; filter: drop-shadow(0 10px 15px rgba(217, 155, 144, 0.3));">✨🌹✨</div>
+            <h2 style="font-family: var(--fuente-elegante); font-size: 1.5rem; font-style: italic; margin-top: 20px; margin-bottom: 10px;">Espero haberte sacado una sonrisa...</h2>
+            <p style="font-size: 0.85rem; color: #7a6a60; max-width: 280px; line-height: 1.6; margin-bottom: 15px;">Este espacio siempre estará aquí para cuando quieras recordar lo especial que eres. Que tengas un hermoso día.</p>
+            <span style="font-family: var(--fuente-elegante); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--rosa-profundo); font-weight: 600;">Para la reina Alexandra</span>
+        </section>
+
+        <section class="carta-seda" id="cartaFinal">
+            <div class="btn-cerrar-carta" id="btnCerrarCarta">🎀</div>
+            <div class="adorno-carta">✦ 🌸 ✦</div>
+            <h2 class="titulo-carta">Para Alguien Incomparable</h2>
+            <div class="subtitulo-carta">Alexandra</div>
+            <div class="contenido-carta">
+                <p>No hacían falta artificios complejos ni mundos lejanos para recordarte lo valiosa que eres. A veces, los sentimientos más sinceros se expresan mejor a través de un espacio limpio, exclusivo y dedicado únicamente a ti.</p>
+                <p>Diseñé este rincón digital para que supieras que eres la persona más importante en mi realidad. Tu presencia embellece todo lo que te rodea, y tenerte en mi vida es el mayor de los privilegios. <strong>Gracias por ser tú.</strong></p>
+            </div>
+            <div class="firma-carta">Fabián</div>
+        </section>
+
+    </main>
+    <script>
+        // Lluvia de partículas de fondo
+        const lluvia = document.getElementById('lluviaBrillos');
+        const elementos = ['🌸', '✨', '✧', '◦'];
+        for (let i = 0; i < 20; i++) {
+            let el = document.createElement('div');
+            el.classList.add('brillo-flotante');
+            el.innerHTML = elementos[Math.floor(Math.random() * elementos.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * -10 + 'vh';
+            el.style.animationDelay = Math.random() * 6 + 's';
+            el.style.fontSize = Math.random() * 12 + 10 + 'px';
+            lluvia.appendChild(el);
+        }
+
+        // Sistema híbrido de clics/toques sin fallos en iOS
+        const asociarAccion = (id, accion) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('click', accion);
+        };
+
+        let cuentaToques = 0;
+        let bloqueadoRosa = false;
+        let faseActual = 'rosa'; 
+
+        const cupula = document.getElementById('cupula');
+        const rosa = document.getElementById('rosa');
+        const textoGuia = document.getElementById('textoGuia');
+        const cartaFinal = document.getElementById('cartaFinal');
+        const seccionRosa = document.getElementById('seccionRosa');
+        const seccionTocador = document.getElementById('seccionTocador');
+        const cortinaMagica = document.getElementById('cortinaMagica');
+        const btnSiguiente = document.getElementById('btnSiguiente');
+
+        asociarAccion('triggerSobre', () => {
+            const sobre = document.getElementById('pantallaSobre');
+            sobre.style.opacity = '0';
+            sobre.style.transform = 'translateY(-100vh)';
+            setTimeout(() => {
+                sobre.style.display = 'none';
+                document.getElementById('escenario').style.opacity = '1';
+                document.getElementById('escenario').style.transform = 'scale(1)';
+            }, 1000);
+        });
+
+        asociarAccion('triggerRosa', (e) => {
+            if (e && e.cancelable) e.preventDefault();
+            if (bloqueadoRosa) return;
+            bloqueadoRosa = true;
+
+            if (cuentaToques >= 3) {
+                rosa.style.transform = "scale(1.4) translateY(-10px)";
+                for (let i = 0; i < 4; i++) lanzarParticula('.area-interactiva', 'petalo-caida', ['💝', '✨'][Math.floor(Math.random() * 2)]);
+                setTimeout(() => rosa.style.transform = "scale(1.3)", 300);
+                bloqueadoRosa = false;
+                return;
+            }
+
+            cuentaToques++;
+            for (let i = 0; i < 6; i++) lanzarParticula('.area-interactiva', 'petalo-caida');
+
+            if (cuentaToques === 1) {
+                cupula.style.borderColor = "var(--dorado-lujo)";
+                cupula.style.boxShadow = "0 0 15px rgba(223, 186, 107, 0.3), inset 0 0 15px rgba(223, 186, 107, 0.4)";
+                cupula.style.transform = "scale(1.04)";
+                textoGuia.innerText = "Un toque más...";
+            } else if (cuentaToques === 2) {
+                cupula.style.background = "rgba(255, 255, 255, 0.05)";
+                cupula.style.borderStyle = "dashed";
+                cupula.style.boxShadow = "0 0 25px rgba(223, 186, 107, 0.5), inset 0 0 30px rgba(223, 186, 107, 0.6)";
+                cupula.style.transform = "scale(1.08) translateY(-5px)";
+                textoGuia.innerText = "Se está rompiendo...";
+            } else if (cuentaToques === 3) {
+                cupula.style.opacity = "0";
+                cupula.style.transform = "scale(1.3) translateY(-60px)";
+                rosa.innerHTML = "🌹✨";
+                rosa.style.transform = "scale(1.3)";
+                textoGuia.style.opacity = "0";
+                setTimeout(() => { cartaFinal.classList.add('abierta'); }, 600);
+            }
+            setTimeout(() => { bloqueadoRosa = false; }, 250);
+        });
+
+        asociarAccion('btnCerrarCarta', () => {
+            cartaFinal.classList.remove('abierta');
+            if (faseActual === 'rosa') {
+                faseActual = 'tocador';
+                setTimeout(() => {
+                    cortinaMagica.classList.add('activa');
+                    setTimeout(() => {
+                        seccionRosa.style.display = 'none';
+                        seccionRosa.style.pointerEvents = 'none';
+                        seccionTocador.classList.add('activa');
+                        cortinaMagica.classList.remove('activa');
+                    }, 1200);
+                }, 400);
+            }
+        });
+
+        // Delegación de eventos para los frascos y las estrellas
+        document.getElementById('contenedorEstante').addEventListener('click', (e) => {
+            const objeto = e.target.closest('.objeto-tocador');
+            if (!objeto) return;
+            
+            const emoji = objeto.getAttribute('data-emoji');
+            const texto = objeto.getAttribute('data-texto');
+            
+            const espejo = document.getElementById('espejo');
+            espejo.classList.remove('activo');
+            setTimeout(() => {
+                document.getElementById('iconoEspejo').innerHTML = `✧ ${emoji} ✧`;
+                document.getElementById('textoEspejo').innerText = texto;
+                espejo.classList.add('activo');
+            }, 300);
+        });
+
+        asociarAccion('btnSiguiente', () => {
+            if (faseActual === 'tocador') {
+                faseActual = 'oraculo';
+                cortinaMagica.classList.add('activa');
+                
+                setTimeout(() => {
+                    document.querySelector('#seccionTocador .encabezado p').innerText = "El tercer secreto";
+                    document.querySelector('#seccionTocador .encabezado h1').innerText = "El Oráculo de las Estrellas";
+                    
+                    const estante = document.getElementById('contenedorEstante');
+                    estante.innerHTML = `
+                        <div class="objeto-tocador" data-tipo="estrella" data-emoji="✨" data-texto="Un deseo: Que la vida nos dé todo el tiempo del mundo para conocernos, cuidarnos y hacernos sonreír cada uno de nuestros días.">
+                            <div class="icono-objeto">⭐</div>
+                            <div class="etiqueta-objeto">Destino 01</div>
+                        </div>
+                        <div class="objeto-tocador" data-tipo="estrella" data-emoji="💎" data-texto="Una certeza: No hace falta llevar meses hablando para saber cuando alguien es genuinamente especial.">
+                            <div class="icono-objeto">🌌</div>
+                            <div class="etiqueta-objeto">Destino 02</div>
+                        </div>
+                        <div class="objeto-tocador" data-tipo="estrella" data-emoji="💝" data-texto="Una promesa: Que aunque apenas estemos empezando a hablar, te aseguro que este rincón y mi atención ya son completamente tuyos.">
+                            <div class="icono-objeto">💫</div>
+                            <div class="etiqueta-objeto">Destino 03</div>
+                        </div>
+                    `;
+                    
+                    document.getElementById('iconoEspejo').innerHTML = "✧ ✦ ✧";
+                    document.getElementById('textoEspejo').innerText = "Toca una estrella flotante para descubrir lo que depara nuestro presente...";
+                    
+                    btnSiguiente.innerText = "Leer tu carta final 💌";
+                    cortinaMagica.classList.remove('activa');
+                }, 1200);
+            } else if (faseActual === 'oraculo') {
+                cartaFinal.classList.add('abierta');
+            }
+        });
+
+        asociarAccion('btnSalir', () => {
+            cortinaMagica.classList.add('activa');
+            setTimeout(() => {
+                seccionTocador.style.display = 'none';
+                seccionTocador.style.pointerEvents = 'none';
+                cartaFinal.classList.remove('abierta');
+                
+                const despedida = document.getElementById('pantallaDespedida');
+                despedida.style.opacity = '1';
+                despedida.style.pointerEvents = 'auto';
+                
+                cortinaMagica.classList.remove('activa');
+            }, 1200);
+        });
+
+        function lanzarParticula(padre, clase, personalizado) {
+            const p = document.createElement('div');
+            p.classList.add(clase);
+            p.innerHTML = personalizado || ['🌸', '✨', '💖'][Math.floor(Math.random() * 3)];
+            p.style.left = (Math.random() * 200 + 40) + 'px';
+            p.style.top = (Math.random() * 200 + 40) + 'px';
+            
+            const contenedor = document.querySelector(padre);
+            if(contenedor) {
+                contenedor.appendChild(p);
+                setTimeout(() => p.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+</html>
